@@ -1,26 +1,9 @@
-const express = require("express");
-
+const express = require('express');
 const router = express.Router();
+const recorderController = require('../controllers/recorderController');
 
-const {
-    launch,
-    getEvents,
-    generatePlaywrightCode,
-    generateSeleniumCode
-} = require("../controllers/recorderController");
-
-router.post("/launch", launch);
-
-router.get("/events", getEvents);
-
-router.get(
-    "/code/playwright",
-    generatePlaywrightCode
-);
-
-router.get(
-    "/code/selenium",
-    generateSeleniumCode
-);
+router.post('/start', recorderController.start);
+router.post('/stop', recorderController.stop);
+router.get('/status', recorderController.status);
 
 module.exports = router;

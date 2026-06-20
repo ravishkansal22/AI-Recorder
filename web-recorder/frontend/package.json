@@ -2,6 +2,11 @@
   "name": "web-recorder-frontend",
   "private": true,
   "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
     "axios": "^1.10.0",
