@@ -1,37 +1,40 @@
 from pathlib import Path
 
-PROJECT_NAME = "recorder-platform"
+PROJECT_NAME = "web-recorder"
 
 folders = [
     "frontend/public",
+
     "frontend/src/components",
     "frontend/src/pages",
     "frontend/src/services",
     "frontend/src/hooks",
     "frontend/src/styles",
 
-    "backend/api",
-    "backend/recorder",
-    "backend/generators",
-    "backend/browser",
-    "backend/models",
-    "backend/exports",
-    "backend/tests",
+    "backend/src/routes",
+    "backend/src/controllers",
+    "backend/src/services",
+    "backend/src/recorder",
+    "backend/src/generators",
+    "backend/src/models",
+    "backend/src/utils",
 
-    "shared"
+    "shared",
+
+    "recordings/sessions",
+    "recordings/exports",
+
+    "docs",
 ]
 
 files = [
-    "frontend/package.json",
-    "frontend/vite.config.js",
+    "frontend/public/logo.png",
 
-    "frontend/src/App.jsx",
-
-    "frontend/src/components/UrlBar.jsx",
+    "frontend/src/components/UrlInput.jsx",
     "frontend/src/components/RecorderControls.jsx",
     "frontend/src/components/RecordedSteps.jsx",
-    "frontend/src/components/CodeEditor.jsx",
-    "frontend/src/components/BrowserStatus.jsx",
+    "frontend/src/components/CodeViewer.jsx",
+    "frontend/src/components/Header.jsx",
 
     "frontend/src/pages/Home.jsx",
 
@@ -40,58 +43,60 @@ files = [
 
     "frontend/src/hooks/useRecorder.js",
 
-    "backend/app.py",
+    "frontend/src/styles/globals.css",
 
-    "backend/api/recorder.py",
-    "backend/api/browser.py",
-    "backend/api/export.py",
+    "frontend/src/App.jsx",
+    "frontend/src/main.jsx",
 
-    "backend/recorder/event_capture.py",
-    "backend/recorder/selector_builder.py",
-    "backend/recorder/session_manager.py",
-    "backend/recorder/event_store.py",
+    "frontend/package.json",
+    "frontend/vite.config.js",
 
-    "backend/generators/base_generator.py",
-    "backend/generators/playwright_generator.py",
-    "backend/generators/selenium_generator.py",
+    "backend/src/server.js",
 
-    "backend/browser/playwright_driver.py",
-    "backend/browser/injection.js",
+    "backend/src/routes/recorderRoutes.js",
 
-    "backend/models/action.py",
-    "backend/models/session.py",
+    "backend/src/controllers/recorderController.js",
 
-    "backend/requirements.txt",
+    "backend/src/services/browserService.js",
+    "backend/src/services/recordingService.js",
+    "backend/src/services/socketService.js",
 
-    "shared/constants.py",
-    "shared/schemas.py",
+    "backend/src/recorder/eventCapture.js",
+    "backend/src/recorder/selectorBuilder.js",
+    "backend/src/recorder/recorderScript.js",
 
-    "README.md"
+    "backend/src/generators/playwrightGenerator.js",
+    "backend/src/generators/seleniumGenerator.js",
+
+    "backend/src/models/recordingSession.js",
+
+    "backend/src/utils/constants.js",
+    "backend/src/utils/logger.js",
+
+    "backend/package.json",
+    "backend/.env",
+
+    "shared/eventTypes.js",
+    "shared/selectors.js",
+
+    "docs/architecture.md",
+    "docs/api.md",
+
+    "README.md",
+    ".gitignore",
 ]
 
+root = Path(PROJECT_NAME)
 
-def create_structure():
-    root = Path(PROJECT_NAME)
+for folder in folders:
+    (root / folder).mkdir(parents=True, exist_ok=True)
 
-    root.mkdir(exist_ok=True)
+for file in files:
+    filepath = root / file
+    filepath.parent.mkdir(parents=True, exist_ok=True)
 
-    for folder in folders:
-        path = root / folder
-        path.mkdir(parents=True, exist_ok=True)
+    if not filepath.exists():
+        filepath.touch()
 
-    for file in files:
-        path = root / file
-
-        path.parent.mkdir(parents=True, exist_ok=True)
-
-        if not path.exists():
-            path.touch()
-
-    print(f"\nProject created: {PROJECT_NAME}\n")
-
-    for item in root.rglob("*"):
-        print(item.relative_to(root))
-
-
-if __name__ == "__main__":
-    create_structure()
+print(f"\nProject structure created successfully!")
+print(f"Location: {root.resolve()}")
