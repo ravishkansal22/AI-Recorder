@@ -1,13 +1,6 @@
-const express = require("express");
-
+const express = require('express');
 const router = express.Router();
-
-const {
-    launch,
-    getEvents,
-    generatePlaywrightCode,
-    generateSeleniumCode
-} = require("../controllers/recorderController");
+const recorderController = require('../controllers/recorderController');
 
 router.post(
     "/launch",
