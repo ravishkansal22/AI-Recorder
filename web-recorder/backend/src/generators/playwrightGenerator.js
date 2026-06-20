@@ -1,37 +1,27 @@
-function generate(events) {
+function generatePlaywright(events) {
 
     let code = `
-import { test, expect } from '@playwright/test';
+const { test, expect } = require('@playwright/test');
 
 test('Recorded Test', async ({ page }) => {
+
 `;
 
-    for (const event of events) {
+    events.forEach(event => {
 
         if (event.type === "navigate") {
-
-            code += `
-    await page.goto('${event.url}');
-`;
+            code += `    await page.goto('${event.url}');\n`;
         }
 
         if (event.type === "click") {
-
-            code += `
-    await page.click('${event.selector}');
-`;
+            code += `    await page.click('${event.selector}');\n`;
         }
 
         if (event.type === "input") {
-
-            code += `
-    await page.fill(
-        '${event.selector}',
-        '${event.value}'
-    );
-`;
+            code += `    await page.fill('${event.selector}', '${event.value}');\n`;
         }
-    }
+
+    });
 
     code += `
 });
@@ -41,5 +31,5 @@ test('Recorded Test', async ({ page }) => {
 }
 
 module.exports = {
-    generate
+    generatePlaywright
 };

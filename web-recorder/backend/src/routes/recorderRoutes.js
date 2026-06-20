@@ -9,9 +9,15 @@ const {
     generateSeleniumCode
 } = require("../controllers/recorderController");
 
-router.post("/launch", launch);
+router.post(
+    "/launch",
+    launch
+);
 
-router.get("/events", getEvents);
+router.get(
+    "/events",
+    getEvents
+);
 
 router.get(
     "/code/playwright",

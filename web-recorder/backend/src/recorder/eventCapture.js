@@ -1,23 +1,40 @@
-const { getPage } = require("../services/browserService");
+const {
+    getPage
+} = require("../services/browserService");
 
-async function getRecordedEvents() {
+async function fetchEvents() {
 
     const page = getPage();
 
-    if (!page) return [];
+    if (!page) {
+        return [];
+    }
 
-    const events = await page.evaluate(() => {
+    try {
 
-        const data = [...window.__events];
+        const events = await page.evaluate(() => {
 
-        window.__events = [];
+            if (!window.__events) {
+                return [];
+            }
 
-        return data;
-    });
+            const recorded = [...window.__events];
 
-    return events;
+            window.__events = [];
+
+            return recorded;
+        });
+
+        return events;
+
+    } catch (error) {
+
+        console.error(error);
+
+        return [];
+    }
 }
 
 module.exports = {
-    getRecordedEvents
+    fetchEvents
 };

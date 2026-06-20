@@ -1,34 +1,29 @@
-function recorderScript() {
+window.__events = [];
 
-    window.__events = [];
+document.addEventListener("click", (e) => {
+    const target = e.target;
 
-    document.addEventListener("click", e => {
+    window.__events.push({
+        type: "click",
+        selector: target.id
+            ? `#${target.id}`
+            : target.tagName.toLowerCase()
+    });
+});
 
-        const target = e.target;
+document.addEventListener("input", (e) => {
+    const el = e.target;
 
+    if (
+        el.tagName === "INPUT" ||
+        el.tagName === "TEXTAREA"
+    ) {
         window.__events.push({
-            type: "click",
-            selector:
-                target.id
-                    ? `#${target.id}`
-                    : target.tagName.toLowerCase()
+            type: "input",
+            selector: el.id
+                ? `#${el.id}`
+                : el.tagName.toLowerCase(),
+            value: el.value
         });
-    });
-
-    document.addEventListener("change", e => {
-
-        const el = e.target;
-
-        if (
-            el.tagName === "INPUT" ||
-            el.tagName === "TEXTAREA"
-        ) {
-
-            window.__events.push({
-                type: "input",
-                selector: `#${el.id}`,
-                value: el.value
-            });
-        }
-    });
-}
+    }
+});

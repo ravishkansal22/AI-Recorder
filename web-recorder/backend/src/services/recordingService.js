@@ -4,16 +4,21 @@ function addEvent(event) {
     events.push(event);
 }
 
-function clearEvents() {
-    events = [];
+function addEvents(newEvents) {
+    events.push(...newEvents);
 }
 
 function getEvents() {
     return events;
 }
 
+function clearEvents() {
+    events = [];
+}
+
 module.exports = {
     addEvent,
-    clearEvents,
-    getEvents
+    addEvents,
+    getEvents,
+    clearEvents
 };
